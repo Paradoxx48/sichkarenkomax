@@ -1,0 +1,158 @@
+zabbix_export:
+  version: '6.4'
+  template_groups:
+    - uuid: 94bf53c5699049ef99cd5c64d493ad39
+      name: CAM
+  templates:
+    - uuid: e19efdd229d2479f8f6ce651f111f917
+      template: 'Trassir CAM HTTP'
+      name: 'Trassir CAM HTTP'
+      groups:
+        - name: CAM
+      items:
+        - uuid: 7c27b0c69ffb4171b27571f83ae14397
+          name: 'CPU load'
+          type: HTTP_AGENT
+          key: CPU_Trassir_cam
+          authtype: BASIC
+          username: '{$USERNAME}'
+          password: '{$PASSWORD}'
+          preprocessing:
+            - type: XMLPATH
+              parameters:
+                - /response/systemstat/cpu/text()
+          url: 'http://{HOST.CONN}/action/get'
+          query_fields:
+            - name: subject
+              value: sysstatus
+          triggers:
+            - uuid: 76f5816cfb184bc1af2e07dbe2a6bdfc
+              expression: 'avg(/Trassir CAM HTTP/CPU_Trassir_cam,5m)>90'
+              name: 'CPU Overload on {HOST.NAME}'
+              priority: AVERAGE
+            - uuid: 44f4c37e5dd444bea01d2018e919bb87
+              expression: 'avg(/Trassir CAM HTTP/CPU_Trassir_cam,5m)>50'
+              name: 'CPU utilization is very high on {HOST.NAME}'
+              priority: AVERAGE
+        - uuid: 5a540550a93e4cecaa46000e663a2ada
+          name: MAC
+          type: HTTP_AGENT
+          key: mac_Trassir_cam
+          trends: '0'
+          value_type: TEXT
+          authtype: BASIC
+          username: '{$USERNAME}'
+          password: '{$PASSWORD}'
+          inventory_link: MACADDRESS_A
+          preprocessing:
+            - type: XMLPATH
+              parameters:
+                - /response/network/mac/text()
+          url: 'http://{HOST.CONN}/action/get'
+          query_fields:
+            - name: subject
+              value: network
+        - uuid: 3a87c4c5ec044f5dbe188ede0b2fe635
+          name: Model
+          type: HTTP_AGENT
+          key: model_Trassir_cam
+          trends: '0'
+          value_type: TEXT
+          authtype: BASIC
+          username: '{$USERNAME}'
+          password: '{$PASSWORD}'
+          inventory_link: MODEL
+          preprocessing:
+            - type: XMLPATH
+              parameters:
+                - /response/devinfo/model/text()
+          url: 'http://{HOST.CONN}/action/get'
+          query_fields:
+            - name: subject
+              value: devinfo
+        - uuid: 9ec7be3230334bb6a3452946369a7440
+          name: DEV_name
+          type: HTTP_AGENT
+          key: name_Trassir_cam
+          trends: '0'
+          value_type: TEXT
+          authtype: BASIC
+          username: '{$USERNAME}'
+          password: '{$PASSWORD}'
+          inventory_link: NAME
+          preprocessing:
+            - type: XMLPATH
+              parameters:
+                - /response/devinfo/name/text()
+          url: 'http://{HOST.CONN}/action/get'
+          query_fields:
+            - name: subject
+              value: devinfo
+        - uuid: 2f5b0771bc6d41e9bcd220a784ad1491
+          name: SerianNo
+          type: HTTP_AGENT
+          key: serial_Trassir_cam
+          trends: '0'
+          value_type: TEXT
+          authtype: BASIC
+          username: '{$USERNAME}'
+          password: '{$PASSWORD}'
+          inventory_link: SERIALNO_A
+          preprocessing:
+            - type: XMLPATH
+              parameters:
+                - /response/devinfo/seqno/text()
+          url: 'http://{HOST.CONN}/action/get'
+          query_fields:
+            - name: subject
+              value: devinfo
+        - uuid: f96ca64bc0a54a3f8a65a88232f420cd
+          name: Software
+          type: HTTP_AGENT
+          key: software_Trassir_cam
+          trends: '0'
+          value_type: TEXT
+          authtype: BASIC
+          username: '{$USERNAME}'
+          password: '{$PASSWORD}'
+          inventory_link: SOFTWARE
+          preprocessing:
+            - type: XMLPATH
+              parameters:
+                - /response/devinfo/softver/text()
+          url: 'http://{HOST.CONN}/action/get'
+          query_fields:
+            - name: subject
+              value: devinfo
+      httptests:
+        - uuid: be31ec6ae4414886aab5eaabaa34255f
+          name: 'TRASSIR HTTP Connection'
+          agent: 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0)'
+          authentication: BASIC
+          http_user: '{$USERNAME}'
+          http_password: '{$PASSWORD}'
+          steps:
+            - name: Availability
+              url: 'http://{HOST.CONN}'
+              status_codes: '200'
+      macros:
+        - macro: '{$PASSWORD}'
+          type: SECRET_TEXT
+        - macro: '{$USERNAME}'
+          type: SECRET_TEXT
+  triggers:
+    - uuid: 6b2f6b5d1cfc4ec18005cc1dbd43def2
+      expression: 'last(/Trassir CAM HTTP/web.test.rspcode[TRASSIR HTTP Connection,Availability],#3)<>200'
+      name: '{HOST.NAME} is not avaliable'
+      priority: HIGH
+  graphs:
+    - uuid: df37a784a01648deb380532a37ffcedd
+      name: 'CPU load'
+      ymin_type_1: FIXED
+      ymax_type_1: FIXED
+      graph_items:
+        - color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'Trassir CAM HTTP'
+            key: CPU_Trassir_cam

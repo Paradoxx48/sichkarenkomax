@@ -1,0 +1,331 @@
+zabbix_export:
+  version: '6.4'
+  template_groups:
+    - uuid: 58afa722676b4fba86702054223316d9
+      name: Templates/Printers
+  templates:
+    - uuid: a76f38c794db4d64bf39475f98063b4e
+      template: 'Xerox VersaLink template'
+      name: 'Xerox VersaLink template'
+      groups:
+        - name: Templates/Printers
+      items:
+        - uuid: a299a79561264f1e8462f40864337836
+          name: 'MAX Drum - Black'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.8.1.6
+          key: max.drum.black
+          delay: 360m
+          history: '0'
+          trends: '0'
+        - uuid: 393151d35ce54cbdb067a919b453e120
+          name: 'MAX Drum - Cyan'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.8.1.9
+          key: max.drum.Cyan
+          delay: 360m
+          history: '0'
+          trends: '0'
+        - uuid: 86c681a4444d401f920691491564e9d7
+          name: 'MAX Drum - Magenta'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.8.1.8
+          key: max.drum.Magenta
+          delay: 360m
+          history: '0'
+          trends: '0'
+        - uuid: 6f315c9537004f43b1f11a3bc3348efa
+          name: 'MAX Drum - Yellow'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.8.1.7
+          key: max.drum.Yellow
+          delay: 360m
+          history: '0'
+          trends: '0'
+        - uuid: 7bcb8d8f36974d1388a2bd0a9ff5ba34
+          name: 'MAX Toner - black'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.8.1.1
+          key: max.toner.black
+          delay: 360m
+          history: '0'
+          trends: '0'
+        - uuid: 14ed990aabb549759a06ed85cf75ec40
+          name: 'MAX toner - Cyan'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.8.1.4
+          key: max.toner.Cyan
+          delay: 360m
+          history: '0'
+          trends: '0'
+        - uuid: f4577bf82b95492090082726517705dd
+          name: 'MAX toner - Magenta'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.8.1.3
+          key: max.toner.Magenta
+          delay: 360m
+          history: '0'
+          trends: '0'
+        - uuid: 6f81f98735c1427db65d85b9c84c7e52
+          name: 'MAX toner - yellow'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.8.1.2
+          key: max.toner.yellow
+          delay: 360m
+          history: '0'
+          trends: '0'
+        - uuid: 1d18f7074f4e4a5dbd71c70440ad71c8
+          name: 'MAX Waste Cartridge'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.8.1.5
+          key: max.waste.cart
+          delay: 360m
+          history: '0'
+          trends: '0'
+        - uuid: 87dc9e1b1287436094e189280e9a9efb
+          name: Model
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.25.3.2.1.3.1
+          key: model
+          delay: 360m
+          trends: '0'
+          value_type: TEXT
+          inventory_link: MODEL
+        - uuid: 353119169df34f4086b11771620a6db3
+          name: Name
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.5.1.1.16.1
+          key: name
+          delay: 360m
+          history: '0'
+          trends: '0'
+          value_type: TEXT
+          inventory_link: NAME
+        - uuid: ec1bcf6e7684430ead40a867e30fa27a
+          name: 'Remaining drum - Black'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.6
+          key: rem.drum.Black
+          delay: 3m
+          triggers:
+            - uuid: af9966d5453d420d8c05c3cfb0f09502
+              expression: 'last(/Xerox VersaLink template/rem.drum.Black)<={$MIN.PAGES}'
+              name: 'Black drum is almost empty on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 5d208fc89b5742bd90baebac055f256b
+          name: 'Remaining drum - Cyan'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.9
+          key: rem.drum.Cyan
+          delay: 3m
+          triggers:
+            - uuid: aba131e84b29486f941660686a2e7511
+              expression: 'last(/Xerox VersaLink template/rem.drum.Cyan)<={$MIN.PAGES}'
+              name: 'Cyan drum is almost empty on {HOST.NAME}'
+              priority: WARNING
+        - uuid: e73eb46038ea4c569c7d531f44a99390
+          name: 'Remaining drum - Magenta'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.8
+          key: rem.drum.Magenta
+          delay: 3m
+          triggers:
+            - uuid: 7028fac262a3432880562d277a16ab2b
+              expression: 'last(/Xerox VersaLink template/rem.drum.Magenta)<={$MIN.PAGES}'
+              name: 'Magenta drum is almost empty on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 3481f468276b4a049ae178e57ea70a8f
+          name: 'Remaining drum - Yellow'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.7
+          key: rem.drum.Yellow
+          delay: 3m
+          triggers:
+            - uuid: 111e246dd6654a24927d9c6be09ca18e
+              expression: 'last(/Xerox VersaLink template/rem.drum.Yellow)<={$MIN.PAGES}'
+              name: 'Yellow drum is almost empty on {HOST.NAME}'
+              priority: WARNING
+        - uuid: f1c27eb036ce495584e6a254d996ab3b
+          name: 'Remaining toner - black'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.1
+          key: rem.ton.black
+          delay: 3m
+          triggers:
+            - uuid: be83003c02aa44f68223b6e879611271
+              expression: 'last(/Xerox VersaLink template/rem.ton.black)<={$MIN.PAGES}'
+              name: 'Black toner is almost empty on {HOST.NAME}'
+              priority: WARNING
+        - uuid: e4b77f63c69342399f7f2fb800ad1333
+          name: 'Remaining toner - Cyan'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.4
+          key: rem.ton.Cyan
+          delay: 3m
+          triggers:
+            - uuid: 9dbc6c9c56404f99a6b5dbb32ef5d7b5
+              expression: 'last(/Xerox VersaLink template/rem.ton.Cyan)<={$MIN.PAGES}'
+              name: 'Cyan toner is almost empty on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 306f2d62945b4ed696d8abf9c32360b2
+          name: 'Remaining toner - Magenta'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.3
+          key: rem.ton.Magenta
+          delay: 3m
+          triggers:
+            - uuid: 8caf147d283a4f44bd1d0fe4a7ee0a05
+              expression: 'last(/Xerox VersaLink template/rem.ton.Magenta)<={$MIN.PAGES}'
+              name: 'Magenta toner is almost empty on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 78d2d3d02dd34a7fa1f6b9934d470b9f
+          name: 'Remaining toner - Yellow'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.2
+          key: rem.ton.Yellow
+          delay: 3m
+          triggers:
+            - uuid: c46b1efa1f0e420482e3cf6dac5ec634
+              expression: 'last(/Xerox VersaLink template/rem.ton.Yellow)<={$MIN.PAGES}'
+              name: 'Yellow toner is almost empty on {HOST.NAME}'
+              priority: WARNING
+        - uuid: d96c34822bf64ba88c53bbd6f8ea32bb
+          name: Serial
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.5.1.1.17.1
+          key: sn
+          delay: 300m
+          history: '0'
+          trends: '0'
+          value_type: TEXT
+          inventory_link: SERIALNO_A
+        - uuid: 9f115307833944e4a43a7eb15d98ec15
+          name: 'Soft ver.'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.25.3.2.1.3.14
+          key: soft.ver
+          delay: 360m
+          trends: '0'
+          value_type: TEXT
+          inventory_link: SOFTWARE
+        - uuid: 76f8c6e2d61440e7bc86193dbd3a83c1
+          name: 'Fuser Status'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.10
+          key: st.fuser
+          trends: '0'
+          value_type: CHAR
+          triggers:
+            - uuid: fa5ca26b6bbc4ab6a99ee931333cac9a
+              expression: 'last(/Xerox VersaLink template/st.fuser)<>-3'
+              name: 'Check fuser on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 06f5f44d03dd4134be16f32ebfc1848b
+          name: 'Trasnfer belt Status'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.11
+          key: st.tr.belt
+          trends: '0'
+          value_type: CHAR
+          triggers:
+            - uuid: 5b45a632700e43b2912a27ac584311bf
+              expression: 'last(/Xerox VersaLink template/st.tr.belt)<>-3'
+              name: 'Check transfer belt on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 04e2c842dc8e471c9b1b282b6d0e1b77
+          name: 'Trasnfer roller Status'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.10
+          key: st.tr.roll
+          trends: '0'
+          value_type: CHAR
+          triggers:
+            - uuid: b4fec524eb2d4c69a902adf1c4ee05bc
+              expression: 'last(/Xerox VersaLink template/st.tr.roll)<>-3'
+              name: 'Check transfer roller on {HOST.NAME}'
+              priority: WARNING
+        - uuid: a53f659ca6d9401994c12d5f847e0a01
+          name: 'Waste Cartridge Status'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.43.11.1.1.9.1.10
+          key: st.waste.cart
+          trends: '0'
+          value_type: CHAR
+          triggers:
+            - uuid: 847a1d8b7eba447e8d89f6c35d74f7f1
+              expression: 'last(/Xerox VersaLink template/st.waste.cart)<>-3'
+              name: 'Check waste container on {HOST.NAME}'
+              priority: WARNING
+        - uuid: 9c0b567164ab4acf84dfc869bd3093d9
+          name: 'Pages printed'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.1
+          key: stat.printed
+          delay: 5m
+          units: pages
+        - uuid: 434d5b1717ce48e49db1bad15356ca09
+          name: 'Black-Wite pages printed'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.34
+          key: stat.printed.bw
+          delay: 5m
+          units: pages
+        - uuid: b21fb318c3b94e94bcd0b796412c80c7
+          name: 'Black-Wite pages printed (big)'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.44
+          key: stat.printed.bw.nig
+          delay: 5m
+          units: pages
+        - uuid: 1a2248155ca740c1940e096a48aab2b5
+          name: 'Colored pages printed'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.33
+          key: stat.printed.colored
+          delay: 5m
+          units: pages
+        - uuid: 2efed6b3ecd2480eb1ecfded0de4fcce
+          name: 'Colored pages printed (big)'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.253.8.53.13.2.1.6.1.20.43
+          key: stat.printed.colored.big
+          delay: 5m
+          units: pages
+      macros:
+        - macro: '{$MIN.PAGES}'
+          value: '300'
+          description: 'Input value of minimal resource you want to get notification'
+  graphs:
+    - uuid: 74c1fd93d6ee4c4eabe4b0863bd225a0
+      name: 'Printed pages'
+      graph_items:
+        - color: 199C0D
+          calc_fnc: ALL
+          item:
+            host: 'Xerox VersaLink template'
+            key: stat.printed.bw
+        - sortorder: '1'
+          color: F63100
+          calc_fnc: ALL
+          item:
+            host: 'Xerox VersaLink template'
+            key: stat.printed.bw.nig
+        - sortorder: '2'
+          color: 2774A4
+          calc_fnc: ALL
+          item:
+            host: 'Xerox VersaLink template'
+            key: stat.printed.colored
+        - sortorder: '3'
+          color: F7941D
+          calc_fnc: ALL
+          item:
+            host: 'Xerox VersaLink template'
+            key: stat.printed.colored.big
+        - sortorder: '4'
+          drawtype: BOLD_LINE
+          color: FFFFFF
+          calc_fnc: ALL
+          item:
+            host: 'Xerox VersaLink template'
+            key: stat.printed
